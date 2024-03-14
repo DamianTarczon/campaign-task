@@ -1,0 +1,28 @@
+{
+    "items": [
+      {
+        "id": "1",
+        "name": "Black Hoodie",
+        "image": "assets/images/products/image1.jpg",
+        "price": "24",
+        "campaign": {
+          "id": "c1",
+          "name": "Winter Sale",
+          "keywords": ["winter", "hoodie", "sale"],
+          "bidAmount": 5,
+          "fund": 1000,
+          "status": "on",
+          "town": "Springfield",
+          "radius": 50
+        }
+      },
+      {
+        "id": "2",
+        "name": "Branded Shoes",
+        "image": "assets/images/products/image2.jpg",
+        "price": "13.5",
+        "campaign": {}
+      }
+    ]
+  }
+  
