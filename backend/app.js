@@ -30,7 +30,7 @@ app.get("/products", (req, res) => {
 
 // GET route for a single product's campaign
 app.get("/products/:id/campaign", (req, res) => {
-  const id = parseInt(req.params.id);
+  const id = req.params.id.toString();
 
   fs.readFile("db.json", "utf8", (err, data) => {
     if (err) {
@@ -53,7 +53,7 @@ app.get("/products/:id/campaign", (req, res) => {
 
 // POST route for creating a campaign for a product
 app.post("/products/:id/campaign", (req, res) => {
-  const id = parseInt(req.params.id);
+  const id = req.params.id.toString();
   const campaign = req.body;
 
   fs.readFile("db.json", "utf8", (err, data) => {
@@ -92,7 +92,7 @@ app.post("/products/:id/campaign", (req, res) => {
 
 // PUT route for updating a product's campaign
 app.put("/products/:id/campaign", (req, res) => {
-  const id = parseInt(req.params.id);
+  const id = req.params.id.toString();
   const campaignUpdates = req.body;
 
   fs.readFile("db.json", "utf8", (err, data) => {
@@ -135,7 +135,7 @@ app.put("/products/:id/campaign", (req, res) => {
 
 // DELETE route for deleting a product's campaign
 app.delete("/products/:id/campaign", (req, res) => {
-  const id = parseInt(req.params.id);
+  const id = req.params.id.toString();
 
   fs.readFile("db.json", "utf8", (err, data) => {
     if (err) {
