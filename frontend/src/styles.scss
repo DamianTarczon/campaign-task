@@ -54,3 +54,7 @@ button.p-element {
     @apply flex items-center;
 }
 
+input.ng-invalid.ng-touched {
+    @apply border-red-500;
+}
+

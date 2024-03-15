@@ -6,21 +6,27 @@
     [draggable]="false"
     styleClass="min-w-[280px]"
 >
-    <div class="flex flex-col gap-4">
+    <form class="flex flex-col gap-4" [formGroup]="campaignForm">
         <label class="flex flex-col">
             <span>Name</span>
             <input 
-                [(ngModel)]="campaign.name" 
+                formControlName="name"
                 class="input-text" 
                 pInputText
-                type="text" 
+                type="text"
             />
+            <div 
+                *ngIf="name!.touched && name!.errors?.['required']"
+                class="text-sm text-red-500"
+            >
+                Name is required
+            </div>
         </label>
 
         <label class="flex flex-col">
             <span>Keywords</span>
             <p-multiSelect 
-                [(ngModel)]="campaign.keywords" 
+                formControlName="keywords"
                 styleClass="w-full input-text h-[34px] px-0"
                 [options]="keywords"
                 placeholder="Select keywords"
@@ -30,7 +36,7 @@
         <label class="flex flex-col">
             <span>Town</span>
             <p-dropdown 
-                [(ngModel)]="campaign.town" 
+                formControlName="town"
                 styleClass="w-full h-[34px] flex items-center border border-gray-300"
                 [options]="towns"
                 placeholder="Select city"
@@ -42,7 +48,7 @@
         <label class="flex flex-col">
             <span>Status</span>
             <p-dropdown 
-                [(ngModel)]="campaign.status" 
+                formControlName="status"
                 styleClass="w-full h-[34px] flex items-center border border-gray-300"
                 [options]="['on', 'off']" 
                 [showClear]="true" 
@@ -53,7 +59,7 @@
         <label class="flex flex-col">
             <span>Bid Amount</span>
             <p-inputNumber 
-                [(ngModel)]="campaign.bidAmount" 
+                formControlName="bidAmount"
                 styleClass="w-full"
                 inputId="minmaxfraction" 
                 mode="currency" 
@@ -66,7 +72,7 @@
         <label class="flex flex-col">
             <span>Fund</span>
             <p-inputNumber 
-                [(ngModel)]="campaign.fund" 
+                formControlName="fund"
                 styleClass="w-full"
                 inputId="minmaxfraction" 
                 mode="currency" 
@@ -77,20 +83,21 @@
         </label>
 
         <label class="flex flex-col">
-            <span>Radius: {{campaign.radius}} km</span>
+            <span>Radius: {{campaignForm.get('radius')?.value}} km</span>
             <p-slider 
-                [(ngModel)]="campaign.radius"
+                formControlName="radius"
                 styleClass="w-full mt-2"
                 [min]="0"
                 [max]="100"
             ></p-slider>
         </label>
-    </div>
+    </form>
     <p-footer class="flex gap-2.5 flex-wrap">
         <button
             class="px-2 py-0.5 rounded-md bg-green-500 text-white hover:bg-green-600 animation-300"
             type="button"
             (click)="onConfirm()"
+            [disabled]="!campaignForm.valid"
         >
             Confirm
         </button>

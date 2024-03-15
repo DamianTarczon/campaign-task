@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { DialogModule } from 'primeng/dialog';
 import Campaign from '../../models/campaign.model';
-import { FormsModule } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputNumberModule } from 'primeng/inputnumber';
@@ -23,6 +23,7 @@ import towns from '../../../assets/data/towns';
         InputNumberModule,
         DropdownModule,
         SliderModule,
+        ReactiveFormsModule
     ],
     templateUrl: './add-edit-campaign.component.html',
     styleUrl: './add-edit-campaign.component.scss',
@@ -32,8 +33,8 @@ export class AddEditCampaignComponent {
     @Input() header!: string;
     @Output() confirm = new EventEmitter<Campaign>();
     @Output() cancel = new EventEmitter<void>();
-    towns: string[] = towns;
-    keywords: string[] = keywords;
+    towns: any[] = towns;
+    keywords: any[] = keywords;
 
     @Input() campaign: Campaign = {
         id: crypto.randomUUID(),
@@ -46,12 +47,44 @@ export class AddEditCampaignComponent {
         radius: 0,
     };
 
+    campaignForm = this.fb.group({
+        id: [''],
+        name: ['', [Validators.required]],
+        keywords: new FormControl([], [Validators.required]),
+        bidAmount: [0, [Validators.required, Validators.min(0)]],
+        fund: [0, [Validators.required, Validators.min(0)]],
+        status: ['on', [Validators.required]],
+        town: ['', [Validators.required]],
+        radius: [0, [Validators.required, Validators.min(0)]]
+    })
+
+    constructor(private fb: FormBuilder) {}
+
+    ngOnChanges() {
+        this.campaignForm.patchValue({
+            id: this.campaign.id,
+            name: this.campaign.name,
+            keywords: this.campaign.keywords as never[],
+            bidAmount: this.campaign.bidAmount,
+            fund: this.campaign.fund,
+            status: this.campaign.status,
+            town: this.campaign.town,
+            radius: this.campaign.radius
+        });
+    }
+
     onConfirm() {
-        this.confirm.emit(this.campaign);
+        if(this.campaignForm.valid){
+            this.confirm.emit(this.campaignForm.value as Campaign);
+        }
     }
 
     onCancel() {
         this.display = false;
         this.cancel.emit();
     }
+
+    get name() {
+        return this.campaignForm.get('name');
+      }
 }

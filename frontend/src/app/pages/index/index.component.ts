@@ -6,6 +6,7 @@ import { CommonModule } from '@angular/common';
 import { ProductComponent } from '../../components/product/product.component';
 import Campaign from '../../models/campaign.model';
 import { CampaignService } from '../../services/campaign/campaign.service';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-index',
