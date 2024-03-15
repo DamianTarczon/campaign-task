@@ -55,7 +55,7 @@ export class ProductComponent {
         this.op.toggle(event);
     }
 
-    confirm() {
+    confirmDeleteCampaign() {
         this.confirmationService.confirm({
             message: 'Are you sure you want to delete this campaign?',
             accept: () => {

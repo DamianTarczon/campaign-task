@@ -57,7 +57,7 @@
                         <button (click)="showEditCampaignModal()">
                             <span class="pi pi-pencil text-blue-500 hover:text-blue-600 hover:scale-125 animation-300 cursor-pointer"></span>
                         </button>
-                        <button (click)="confirm()">
+                        <button (click)="confirmDeleteCampaign()">
                             <span class="pi pi-trash text-red-500 hover:text-red-600 hover:scale-125 animation-300 cursor-pointer"></span>
                         </button>
                     </div>
@@ -84,5 +84,5 @@
     [display]="displayEditCampaignModal"
     (confirm)="onConfirmEdit($event)"
     (cancel)="closeEditCampaignModal()"
-    header="Add Campaign"
+    header="Edit Campaign"
 ></app-add-edit-campaign>
