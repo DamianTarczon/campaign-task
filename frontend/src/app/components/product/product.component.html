@@ -35,24 +35,31 @@
             </button>
             <p-overlayPanel #op (onHide)="showCampaign=false">
                 <div class="w-full flex flex-col gap-2">
-                    <h2 class="text-lg font-bold">{{ product.campaign?.name }}</h2>
+                    <h2 class="text-lg font-bold text-black">{{ product.campaign?.name }}</h2>
                     <div class="flex flex-row flex-wrap justify-between gap-y-2 gap-x-5">
                         <div class="flex flex-col gap-2">
-                            <p><span class="font-semibold">Keywords: </span>{{ product.campaign?.keywords?.join(', ') }}</p>
-                            <p><span class="font-semibold">Bid Amount: </span>{{ product.campaign?.bidAmount }} zł</p>
-                            <p><span class="font-semibold">Fund: </span>{{ product.campaign?.fund }} zł</p>
+                            <p><span class="font-semibold text-black">Keywords: </span>{{ product.campaign?.keywords?.join(', ') }}</p>
+                            <p><span class="font-semibold text-black">Bid Amount: </span>{{ product.campaign?.bidAmount }} zł</p>
+                            <p><span class="font-semibold text-black">Fund: </span>{{ product.campaign?.fund }} zł</p>
                         </div>
                         <div class="flex flex-col gap-2">
-                            <p><span class="font-semibold">Status: </span><span class="uppercase">{{ product.campaign?.status }}</span></p>
-                            <p><span class="font-semibold">Town: </span>{{ product.campaign?.town }}</p>
-                            <p><span class="font-semibold">Radius: </span>{{ product.campaign?.radius }} km</p>
+                            <p><span class="font-semibold text-black">Status: </span><span class="uppercase">{{ product.campaign?.status }}</span></p>
+                            <p><span class="font-semibold text-black">Town: </span>{{ product.campaign?.town }}</p>
+                            <p><span class="font-semibold text-black">Radius: </span>{{ product.campaign?.radius }} km</p>
                         </div>
                     </div>
                     <div class="flex gap-4 items-center justify-end pt-2">
                         <span class="pi pi-pencil text-blue-500 hover:text-blue-600 hover:scale-125 animation-300 cursor-pointer"></span>
-                        <span class="pi pi-trash text-red-500 hover:text-red-600 hover:scale-125 animation-300 cursor-pointer"></span>
+                        <button (click)="confirm()">
+                            <span class="pi pi-trash text-red-500 hover:text-red-600 hover:scale-125 animation-300 cursor-pointer"></span>
+                        </button>
                     </div>
                 </div>
+                <p-confirmDialog>
+                    <ng-template pTemplate="message" let-message>
+                        <p class="text-black">{{ message.message }}</p>
+                    </ng-template>
+                </p-confirmDialog>
             </p-overlayPanel>
         </ng-template>
     </div>
