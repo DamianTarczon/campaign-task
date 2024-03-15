@@ -37,11 +37,18 @@ export class ProductComponent {
     showCampaign: boolean = false;
     displayAddCampaignModal: boolean = false;
     displayEditCampaignModal: boolean = false;
+    selectedCampaign: Campaign = {
+        id: '',
+        name: '',
+        keywords: [],
+        bidAmount: 0,
+        fund: 0,
+        status: 'on',
+        town: '',
+        radius: 0,
+    }
 
-    constructor(
-        private confirmationService: ConfirmationService,
-        private campaignService: CampaignService
-    ) {}
+    constructor(private confirmationService: ConfirmationService) {}
 
     toggleCampaignVisibility(event: Event) {
         this.showCampaign = !this.showCampaign;
@@ -71,5 +78,10 @@ export class ProductComponent {
 
     closeEditCampaignModal() {
         this.displayEditCampaignModal = false;
+    }
+
+    showEditCampaignModal() {
+        this.displayEditCampaignModal = true;
+        this.selectedCampaign = structuredClone(this.product.campaign!);
     }
 }

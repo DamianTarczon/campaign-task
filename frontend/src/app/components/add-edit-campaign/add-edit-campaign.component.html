@@ -10,10 +10,10 @@
         <label class="flex flex-col">
             <span>Name</span>
             <input 
+                [(ngModel)]="campaign.name" 
                 class="input-text" 
                 pInputText
                 type="text" 
-                [(ngModel)]="campaign.name" 
             />
         </label>
 
@@ -21,19 +21,19 @@
             <span>Keywords</span>
             <p-multiSelect 
                 [(ngModel)]="campaign.keywords" 
+                styleClass="w-full input-text h-[34px] px-0"
                 [options]="keywords"
                 placeholder="Select keywords"
-                styleClass="w-full input-text h-[34px] px-0"
             ></p-multiSelect>
         </label>
 
         <label class="flex flex-col">
             <span>Town</span>
             <p-dropdown 
-                [options]="towns"
                 [(ngModel)]="campaign.town" 
-                placeholder="Select city"
                 styleClass="w-full h-[34px] flex items-center border border-gray-300"
+                [options]="towns"
+                placeholder="Select city"
                 [filter]="true" 
                 filterBy="name"
             ></p-dropdown>
@@ -42,11 +42,11 @@
         <label class="flex flex-col">
             <span>Status</span>
             <p-dropdown 
-                [options]="['on', 'off']" 
                 [(ngModel)]="campaign.status" 
+                styleClass="w-full h-[34px] flex items-center border border-gray-300"
+                [options]="['on', 'off']" 
                 [showClear]="true" 
                 placeholder="Select status"
-                styleClass="w-full h-[34px] flex items-center border border-gray-300"
             ></p-dropdown>
         </label>
 
@@ -54,12 +54,12 @@
             <span>Bid Amount</span>
             <p-inputNumber 
                 [(ngModel)]="campaign.bidAmount" 
-                inputId="minmaxfraction" 
-                mode="decimal" 
-                [minFractionDigits]="0" 
-                [maxFractionDigits]="2"
-                inputStyleClass="input-text w-full"
                 styleClass="w-full"
+                inputId="minmaxfraction" 
+                mode="currency" 
+                inputStyleClass="input-text w-full"
+                currency="PLN"
+                locale="pl-PL"
             ></p-inputNumber>
         </label>
 
@@ -67,12 +67,12 @@
             <span>Fund</span>
             <p-inputNumber 
                 [(ngModel)]="campaign.fund" 
-                inputId="minmaxfraction" 
-                mode="decimal" 
-                [minFractionDigits]="0" 
-                [maxFractionDigits]="2"
-                inputStyleClass="input-text w-full"
                 styleClass="w-full"
+                inputId="minmaxfraction" 
+                mode="currency" 
+                inputStyleClass="input-text w-full"
+                currency="PLN"
+                locale="pl-PL"
             ></p-inputNumber>
         </label>
 
@@ -80,9 +80,9 @@
             <span>Radius: {{campaign.radius}} km</span>
             <p-slider 
                 [(ngModel)]="campaign.radius"
+                styleClass="w-full mt-2"
                 [min]="0"
                 [max]="100"
-                styleClass="w-full mt-2"
             ></p-slider>
         </label>
     </div>

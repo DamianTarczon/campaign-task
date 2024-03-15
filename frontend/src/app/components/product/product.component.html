@@ -54,7 +54,7 @@
                         </div>
                     </div>
                     <div class="flex gap-4 items-center justify-end pt-2">
-                        <button (click)="displayEditCampaignModal = true">
+                        <button (click)="showEditCampaignModal()">
                             <span class="pi pi-pencil text-blue-500 hover:text-blue-600 hover:scale-125 animation-300 cursor-pointer"></span>
                         </button>
                         <button (click)="confirm()">
@@ -80,7 +80,7 @@
 ></app-add-edit-campaign>
 
 <app-add-edit-campaign
-    [campaign]="product.campaign!"
+    [campaign]="selectedCampaign"
     [display]="displayEditCampaignModal"
     (confirm)="onConfirmEdit($event)"
     (cancel)="closeEditCampaignModal()"
