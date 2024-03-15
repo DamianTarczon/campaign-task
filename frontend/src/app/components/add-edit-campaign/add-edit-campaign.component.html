@@ -1,0 +1,105 @@
+<p-dialog
+    [header]="header"
+    [(visible)]="display"
+    [modal]="true"
+    [closable]="false"
+    [draggable]="false"
+    styleClass="min-w-[280px]"
+>
+    <div class="flex flex-col gap-4">
+        <label class="flex flex-col">
+            <span>Name</span>
+            <input 
+                class="input-text" 
+                pInputText
+                type="text" 
+                [(ngModel)]="campaign.name" 
+            />
+        </label>
+
+        <label class="flex flex-col">
+            <span>Keywords</span>
+            <p-multiSelect 
+                [(ngModel)]="campaign.keywords" 
+                [options]="keywords"
+                placeholder="Select keywords"
+                styleClass="w-full input-text h-[34px] px-0"
+            ></p-multiSelect>
+        </label>
+
+        <label class="flex flex-col">
+            <span>Town</span>
+            <p-dropdown 
+                [options]="towns"
+                [(ngModel)]="campaign.town" 
+                placeholder="Select city"
+                styleClass="w-full h-[34px] flex items-center border border-gray-300"
+                [filter]="true" 
+                filterBy="name"
+            ></p-dropdown>
+        </label>
+
+        <label class="flex flex-col">
+            <span>Status</span>
+            <p-dropdown 
+                [options]="['on', 'off']" 
+                [(ngModel)]="campaign.status" 
+                [showClear]="true" 
+                placeholder="Select status"
+                styleClass="w-full h-[34px] flex items-center border border-gray-300"
+            ></p-dropdown>
+        </label>
+
+        <label class="flex flex-col">
+            <span>Bid Amount</span>
+            <p-inputNumber 
+                [(ngModel)]="campaign.bidAmount" 
+                inputId="minmaxfraction" 
+                mode="decimal" 
+                [minFractionDigits]="0" 
+                [maxFractionDigits]="2"
+                inputStyleClass="input-text w-full"
+                styleClass="w-full"
+            ></p-inputNumber>
+        </label>
+
+        <label class="flex flex-col">
+            <span>Fund</span>
+            <p-inputNumber 
+                [(ngModel)]="campaign.fund" 
+                inputId="minmaxfraction" 
+                mode="decimal" 
+                [minFractionDigits]="0" 
+                [maxFractionDigits]="2"
+                inputStyleClass="input-text w-full"
+                styleClass="w-full"
+            ></p-inputNumber>
+        </label>
+
+        <label class="flex flex-col">
+            <span>Radius: {{campaign.radius}} km</span>
+            <p-slider 
+                [(ngModel)]="campaign.radius"
+                [min]="0"
+                [max]="100"
+                styleClass="w-full mt-2"
+            ></p-slider>
+        </label>
+    </div>
+    <p-footer class="flex gap-2.5 flex-wrap">
+        <button
+            class="px-2 py-0.5 rounded-md bg-green-500 text-white hover:bg-green-600 animation-300"
+            type="button"
+            (click)="onConfirm()"
+        >
+            Confirm
+        </button>
+        <button
+            class="px-2 py-0.5 rounded-md bg-red-500 text-white hover:bg-red-600 animation-300"
+            type="button"
+            (click)="onCancel()"
+        >
+            Cancel
+        </button>
+    </p-footer>
+</p-dialog>

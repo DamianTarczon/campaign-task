@@ -30,7 +30,7 @@ export class IndexComponent {
         })
     }
 
-    addCampaign(campaign: Campaign, id: string) {
+    addCampaign([campaign, id]: [Campaign, string]) {
         this.campaignService.addCampaign(`${this.baseUrl}/products/${id}/campaign`, campaign).subscribe(
             {
                 next: () => {
@@ -41,7 +41,7 @@ export class IndexComponent {
         )
     }
 
-    editCampaign(campaign: Campaign, id: string) {
+    editCampaign([campaign, id]: [Campaign, string]) {
         this.campaignService.editCampaign(`${this.baseUrl}/products/${id}/campaign`, campaign).subscribe(
             {
                 next: () => {

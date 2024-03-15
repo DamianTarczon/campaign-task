@@ -1,3 +1,9 @@
 <div class="w-full grid grid-cols-1 xs:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 lg:gap-8">
-    <app-product *ngFor="let product of products" [product]="product" (deleteCampaign)="deleteCampaign($event)"></app-product>
+    <app-product 
+        *ngFor="let product of products" 
+        [product]="product" 
+        (deleteCampaign)="deleteCampaign($event)"
+        (addCampaign)="addCampaign($event)"
+        (editCampaign)="editCampaign($event)"
+    ></app-product>
 </div>

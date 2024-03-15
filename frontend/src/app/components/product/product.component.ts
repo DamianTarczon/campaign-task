@@ -1,4 +1,10 @@
-import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import {
+    Component,
+    EventEmitter,
+    Input,
+    Output,
+    ViewChild,
+} from '@angular/core';
 import Product from '../../models/product.model';
 import { CommonModule } from '@angular/common';
 import { OverlayPanelModule } from 'primeng/overlaypanel';
@@ -6,22 +12,36 @@ import { OverlayPanel } from 'primeng/overlaypanel';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ConfirmationService } from 'primeng/api';
 import { CampaignService } from '../../services/campaign/campaign.service';
+import { AddEditCampaignComponent } from '../add-edit-campaign/add-edit-campaign.component';
+import Campaign from '../../models/campaign.model';
 
 @Component({
-  selector: 'app-product',
-  standalone: true,
-  imports: [CommonModule, OverlayPanelModule, ConfirmDialogModule],
-  providers: [ConfirmationService],
-  templateUrl: './product.component.html',
-  styleUrl: './product.component.scss'
+    selector: 'app-product',
+    standalone: true,
+    imports: [
+        CommonModule,
+        OverlayPanelModule,
+        ConfirmDialogModule,
+        AddEditCampaignComponent,
+    ],
+    providers: [ConfirmationService],
+    templateUrl: './product.component.html',
+    styleUrl: './product.component.scss',
 })
 export class ProductComponent {
     @Input() product!: Product;
-    showCampaign: boolean = false;
     @ViewChild('op') op!: OverlayPanel;
-    @Output() deleteCampaign: EventEmitter<any> = new EventEmitter();
-    
-    constructor(private confirmationService: ConfirmationService, private campaignService: CampaignService) {}
+    @Output() deleteCampaign: EventEmitter<string> = new EventEmitter();
+    @Output() addCampaign: EventEmitter<[Campaign, string]> = new EventEmitter();
+    @Output() editCampaign: EventEmitter<[Campaign, string]> = new EventEmitter();
+    showCampaign: boolean = false;
+    displayAddCampaignModal: boolean = false;
+    displayEditCampaignModal: boolean = false;
+
+    constructor(
+        private confirmationService: ConfirmationService,
+        private campaignService: CampaignService
+    ) {}
 
     toggleCampaignVisibility(event: Event) {
         this.showCampaign = !this.showCampaign;
@@ -33,7 +53,23 @@ export class ProductComponent {
             message: 'Are you sure you want to delete this campaign?',
             accept: () => {
                 this.deleteCampaign.emit(this.product.id);
-            }
+            },
         });
+    }
+
+    onConfirmAdd(campaign: Campaign) {
+        this.addCampaign.emit([campaign, this.product.id]);
+    }
+
+    onConfirmEdit(campaign: Campaign) {
+        this.editCampaign.emit([campaign, this.product.id]);
+    }
+
+    closeAddCampaignModal() {
+        this.displayAddCampaignModal = false;
+    }
+
+    closeEditCampaignModal() {
+        this.displayEditCampaignModal = false;
     }
 }

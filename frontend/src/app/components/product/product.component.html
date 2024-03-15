@@ -17,14 +17,19 @@
     <div class="py-2 px-3.5 border border-gray-300 rounded-b-md border-t-0 -mt-1">
         <div *ngIf="product.campaign; then showBlock else addBlock"></div>
         <ng-template #addBlock>
-            <div  class="flex items-center gap-2 group justify-between">
+            <button 
+                class="flex items-center gap-2 group justify-between w-full"
+                type="button"
+                (click)="displayAddCampaignModal=true"
+            >
                 <p class="text-sm text-gray-400 group-hover:text-gray-500 animation-300">Add campaign</p>
                 <span class="pi pi-plus text-sm text-gray-400 group-hover:text-gray-500 animation-300"></span>
-            </div>
+            </button>
         </ng-template>
         <ng-template #showBlock>
             <button 
                 class="flex items-center gap-2 group justify-between w-full"
+                type="button"
                 (click)="toggleCampaignVisibility($event)"
             >
                 <p class="text-sm text-gray-400 group-hover:text-gray-500 animation-300">{{ showCampaign ? 'Hide' : 'Show' }} campaign</p>
@@ -49,7 +54,9 @@
                         </div>
                     </div>
                     <div class="flex gap-4 items-center justify-end pt-2">
-                        <span class="pi pi-pencil text-blue-500 hover:text-blue-600 hover:scale-125 animation-300 cursor-pointer"></span>
+                        <button (click)="displayEditCampaignModal = true">
+                            <span class="pi pi-pencil text-blue-500 hover:text-blue-600 hover:scale-125 animation-300 cursor-pointer"></span>
+                        </button>
                         <button (click)="confirm()">
                             <span class="pi pi-trash text-red-500 hover:text-red-600 hover:scale-125 animation-300 cursor-pointer"></span>
                         </button>
@@ -64,3 +71,18 @@
         </ng-template>
     </div>
 </div>
+
+<app-add-edit-campaign
+    [display]="displayAddCampaignModal"
+    (confirm)="onConfirmAdd($event)"
+    (cancel)="closeAddCampaignModal()"
+    header="Add Campaign"
+></app-add-edit-campaign>
+
+<app-add-edit-campaign
+    [campaign]="product.campaign!"
+    [display]="displayEditCampaignModal"
+    (confirm)="onConfirmEdit($event)"
+    (cancel)="closeEditCampaignModal()"
+    header="Add Campaign"
+></app-add-edit-campaign>
