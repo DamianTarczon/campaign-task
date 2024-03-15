@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import Options from '../../models/options.model';
+import Campaign from '../../models/campaign.model';
 
 @Injectable({
   providedIn: 'root'
@@ -14,15 +15,15 @@ export class ApiService {
     return this.httpClient.get<T>(url);
   }
 
-  post<T>(url: string, options: Options): Observable<T> {
-    return this.httpClient.post<T>(url, options);
+  post<T>(url: string, body: Campaign): Observable<T> {
+    return this.httpClient.post<T>(url, body);
   }
 
-  put<T>(url: string, options: Options): Observable<T> {
-    return this.httpClient.put<T>(url, options);
+  put<T>(url: string, body: Campaign): Observable<T> {
+    return this.httpClient.put<T>(url, body);
   }
 
-  delete<T>(url: string, options: Options): Observable<T> {
-    return this.httpClient.delete<T>(url, options);
+  delete<T>(url: string): Observable<T> {
+    return this.httpClient.delete<T>(url);
   }
 }

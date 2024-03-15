@@ -14,10 +14,46 @@
             <span class="pi pi-trash text-red-500 hover:text-red-600 hover:scale-125 animation-300 cursor-pointer"></span>
         </div>
     </div>
-    <div class="p-2 border border-gray-300 rounded-b-md border-t-0 -mt-1">
-        <div class="flex items-center gap-2 group">
-            <span class="pi pi-plus text-sm text-gray-400 group-hover:text-gray-500 group-hover:rotate-[360deg] animation-500"></span>
-            <p class="text-sm text-gray-400 group-hover:text-gray-500 animation-500">Add campaign</p>
-        </div>
+    <div class="py-2 px-3.5 border border-gray-300 rounded-b-md border-t-0 -mt-1">
+        <div *ngIf="product.campaign; then showBlock else addBlock"></div>
+        <ng-template #addBlock>
+            <div  class="flex items-center gap-2 group justify-between">
+                <p class="text-sm text-gray-400 group-hover:text-gray-500 animation-300">Add campaign</p>
+                <span class="pi pi-plus text-sm text-gray-400 group-hover:text-gray-500 animation-300"></span>
+            </div>
+        </ng-template>
+        <ng-template #showBlock>
+            <button 
+                class="flex items-center gap-2 group justify-between w-full"
+                (click)="toggleCampaignVisibility($event)"
+            >
+                <p class="text-sm text-gray-400 group-hover:text-gray-500 animation-300">{{ showCampaign ? 'Hide' : 'Show' }} campaign</p>
+                <span 
+                    class="pi text-sm text-gray-400 group-hover:text-gray-500 animation-300"
+                    [ngClass]="showCampaign ? 'pi-minus' : 'pi-plus'"
+                ></span>
+            </button>
+            <p-overlayPanel #op (onHide)="showCampaign=false">
+                <div class="w-full flex flex-col gap-2">
+                    <h2 class="text-lg font-bold">{{ product.campaign?.name }}</h2>
+                    <div class="flex flex-row flex-wrap justify-between gap-y-2 gap-x-5">
+                        <div class="flex flex-col gap-2">
+                            <p><span class="font-semibold">Keywords: </span>{{ product.campaign?.keywords?.join(', ') }}</p>
+                            <p><span class="font-semibold">Bid Amount: </span>{{ product.campaign?.bidAmount }} zł</p>
+                            <p><span class="font-semibold">Fund: </span>{{ product.campaign?.fund }} zł</p>
+                        </div>
+                        <div class="flex flex-col gap-2">
+                            <p><span class="font-semibold">Status: </span><span class="uppercase">{{ product.campaign?.status }}</span></p>
+                            <p><span class="font-semibold">Town: </span>{{ product.campaign?.town }}</p>
+                            <p><span class="font-semibold">Radius: </span>{{ product.campaign?.radius }} km</p>
+                        </div>
+                    </div>
+                    <div class="flex gap-4 items-center justify-end pt-2">
+                        <span class="pi pi-pencil text-blue-500 hover:text-blue-600 hover:scale-125 animation-300 cursor-pointer"></span>
+                        <span class="pi pi-trash text-red-500 hover:text-red-600 hover:scale-125 animation-300 cursor-pointer"></span>
+                    </div>
+                </div>
+            </p-overlayPanel>
+        </ng-template>
     </div>
 </div>
