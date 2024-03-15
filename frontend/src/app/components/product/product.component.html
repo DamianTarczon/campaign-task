@@ -1,0 +1,23 @@
+<div class="w-full flex flex-col h-full">
+    <img 
+        class="w-full rounded-t-md flex-shrink-0"
+        [src]="product.image" 
+        [alt]="product.name" 
+    />
+    <div class="flex flex-col border p-3.5 border-gray-300 border-t-0 rounded-b-md gap-5 h-full justify-between">
+        <div class="flex gap-2.5 justify-between">
+            <h2 class="text-xl font-semibold inline-block overflow-hidden text-ellipsis">{{product.name}}</h2>
+            <p class="text-gray-600 text-end shrink-0">{{product.price}} zł</p>
+        </div>
+        <div class="flex gap-4 items-center justify-end">
+            <span class="pi pi-pencil text-blue-500 hover:text-blue-600 hover:scale-125 animation-300 cursor-pointer"></span>
+            <span class="pi pi-trash text-red-500 hover:text-red-600 hover:scale-125 animation-300 cursor-pointer"></span>
+        </div>
+    </div>
+    <div class="p-2 border border-gray-300 rounded-b-md border-t-0 -mt-1">
+        <div class="flex items-center gap-2 group">
+            <span class="pi pi-plus text-sm text-gray-400 group-hover:text-gray-500 group-hover:rotate-[360deg] animation-500"></span>
+            <p class="text-sm text-gray-400 group-hover:text-gray-500 animation-500">Add campaign</p>
+        </div>
+    </div>
+</div>
