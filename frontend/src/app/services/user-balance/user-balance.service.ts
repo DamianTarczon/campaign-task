@@ -5,7 +5,7 @@ import { BehaviorSubject } from 'rxjs';
   providedIn: 'root'
 })
 export class UserBalanceService {
-  private balanceSource = new BehaviorSubject<number>(550); // Assuming 550 zł as initial balance
+  private balanceSource = new BehaviorSubject<number>(4550); // Assuming 550 zł as initial balance
   currentBalance = this.balanceSource.asObservable();
 
   constructor() { }
