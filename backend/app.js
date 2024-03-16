@@ -6,7 +6,7 @@ const app = express();
 const port = process.env.PORT || 3000;
 
 const corsOptions = {
-  origin: "http://localhost:4200",
+  origin: "https://main--golden-custard-f1bea7.netlify.app",
   optionsSuccessStatus: 204,
   methods: "GET, POST, PUT, DELETE",
 };
