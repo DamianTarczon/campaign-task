@@ -1,12 +1,12 @@
 const express = require("express");
 const fs = require("fs");
 const cors = require("cors");
-const serverless = require('serverless-http');
 
 const app = express();
+const port = 3000;
 
 const corsOptions = {
-  origin: "https://main--golden-custard-f1bea7.netlify.app",
+  origin: "http://localhost:4200",
   optionsSuccessStatus: 204,
   methods: "GET, POST, PUT, DELETE",
 };
@@ -171,4 +171,6 @@ app.delete("/products/:id/campaign", (req, res) => {
   });
 });
 
-module.exports.handler = serverless(app);
+app.listen(port, () => {
+  console.log(`Server listening at http://localhost:${port}`);
+});
