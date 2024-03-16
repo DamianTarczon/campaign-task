@@ -1,0 +1,46 @@
+.p-overlaypanel {
+    @apply m-2;
+}
+div.p-confirm-dialog {
+    .p-dialog-header {
+        @apply p-2.5 flex justify-end;
+    }
+}
+
+.p-dialog-footer {
+    @apply flex gap-5 flex-row-reverse;
+}
+
+button.p-element {
+    @apply border border-gray-300 px-2 py-0.5;
+}
+
+.p-checkbox-box, .p-multiselect-filter, .p-slider-handle {
+    @apply border border-gray-300;
+}
+
+.p-multiselect-label-container {
+    @apply flex items-center;
+}
+
+input.ng-invalid.ng-touched {
+    @apply border-red-500;
+}
+
+p-multiselect.ng-invalid.ng-touched {
+    .input-text {
+        @apply border-red-500;
+    }
+}
+
+p-dropdown.ng-invalid.ng-touched {
+    .p-inputwrapper {
+        @apply border-red-500;
+    }
+}
+
+p-inputnumber.ng-invalid.ng-touched {
+    input {
+        @apply border-red-500;
+    }
+}

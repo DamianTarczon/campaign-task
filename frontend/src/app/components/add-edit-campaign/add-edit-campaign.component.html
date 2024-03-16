@@ -106,7 +106,7 @@
                 styleClass="w-full"
                 inputId="minmaxfraction" 
                 mode="currency" 
-                [inputStyleClass]="campaignForm.errors?.['fundLessThanBid']? 'border-red-500 input-text w-full' : 'input-text w-full'"
+                [inputStyleClass]="campaignForm.errors?.['fundLessThanBid'] || campaignForm.errors?.['fundExceedsBalance']? 'border-red-500 input-text w-full' : 'input-text w-full'"
                 currency="PLN"
                 locale="pl-PL"
             ></p-inputNumber>
@@ -126,7 +126,10 @@
                 *ngIf="campaignForm.errors?.['fundLessThanBid']" 
                 class="text-sm text-red-500"
             >
-                Fund amount cannot be less than the bid amount.
+                Fund amount cannot be less than the bid amount
+            </div>
+            <div *ngIf="campaignForm.errors?.['fundExceedsBalance']" class="text-sm text-red-500">
+                Fund amount cannot exceed your current balance
             </div>
         </label>
 

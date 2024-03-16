@@ -7,6 +7,8 @@ import { ProductComponent } from '../../components/product/product.component';
 import Campaign from '../../models/campaign.model';
 import { CampaignService } from '../../services/campaign/campaign.service';
 import { ReactiveFormsModule } from '@angular/forms';
+import { UserBalanceService } from '../../services/user-balance/user-balance.service';
+import { take } from 'rxjs';
 
 @Component({
   selector: 'app-index',
@@ -19,15 +21,18 @@ export class IndexComponent {
     private baseUrl: string = environment.apiUrl;
     products: Product[] = [];
     
-    constructor(private productsService: ProductsService, private campaignService: CampaignService) {}
+    constructor(private productsService: ProductsService, private campaignService: CampaignService, private userBalanceService: UserBalanceService) {}
 
     ngOnInit() {
         this.fetchProducts();
     }
 
     fetchProducts() {
-        this.productsService.getProducts(`${this.baseUrl}/products`).subscribe((products: Product[]) => {
-            this.products = products;
+        this.productsService.getProducts(`${this.baseUrl}/products`).subscribe({
+            next: (data) => {
+                this.products = data;
+            },
+            error: (error) => console.log(error)
         })
     }
 
@@ -35,7 +40,14 @@ export class IndexComponent {
         this.campaignService.addCampaign(`${this.baseUrl}/products/${id}/campaign`, campaign).subscribe(
             {
                 next: () => {
+                    const fundAmount = campaign.fund;
+                    this.userBalanceService.currentBalance
+                    .pipe(take(1))
+                    .subscribe(currentBalance => {
+                        this.userBalanceService.updateBalance(currentBalance - fundAmount);
+                    });
                     this.fetchProducts();
+
                 },
                 error: (error) => console.log(error)
             }

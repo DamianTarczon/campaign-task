@@ -2,6 +2,7 @@
 @import "primeng/resources/primeng.css";
 @import "primeicons/primeicons.css";
 @import url('https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100..900;1,100..900&display=swap');
+@import './assets/styles/primeNg-overrides.scss';
 
 @tailwind base;
 @tailwind components;
@@ -27,51 +28,4 @@
 
 html{
     font-family: 'Jost', sans-serif !important;
-}
-
-.p-overlaypanel {
-    @apply m-2;
-}
-div.p-confirm-dialog {
-    .p-dialog-header {
-        @apply p-2.5 flex justify-end;
-    }
-}
-
-.p-dialog-footer {
-    @apply flex gap-5 flex-row-reverse;
-}
-
-button.p-element {
-    @apply border border-gray-300 px-2 py-0.5;
-}
-
-.p-checkbox-box, .p-multiselect-filter, .p-slider-handle {
-    @apply border border-gray-300;
-}
-
-.p-multiselect-label-container {
-    @apply flex items-center;
-}
-
-input.ng-invalid.ng-touched {
-    @apply border-red-500;
-}
-
-p-multiselect.ng-invalid.ng-touched {
-    .input-text {
-        @apply border-red-500;
-    }
-}
-
-p-dropdown.ng-invalid.ng-touched {
-    .p-inputwrapper {
-        @apply border-red-500;
-    }
-}
-
-p-inputnumber.ng-invalid.ng-touched {
-    input {
-        @apply border-red-500;
-    }
 }

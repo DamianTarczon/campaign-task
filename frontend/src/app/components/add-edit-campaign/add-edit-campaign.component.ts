@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, SimpleChanges } from '@angular/core';
 import { DialogModule } from 'primeng/dialog';
 import Campaign from '../../models/campaign.model';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
@@ -10,6 +10,7 @@ import { DropdownModule } from 'primeng/dropdown';
 import { SliderModule } from 'primeng/slider';
 import keywords from '../../../assets/data/keywords';
 import towns from '../../../assets/data/towns';
+import { UserBalanceService } from '../../services/user-balance/user-balance.service';
 
 @Component({
     selector: 'app-add-edit-campaign',
@@ -35,6 +36,7 @@ export class AddEditCampaignComponent {
     @Output() cancel = new EventEmitter<void>();
     towns: any[] = towns;
     keywords: any[] = keywords;
+    currentBalance: number = 0;
 
     @Input() campaign: Campaign = {
         id: crypto.randomUUID(),
@@ -47,6 +49,8 @@ export class AddEditCampaignComponent {
         radius: 0,
     };
 
+    constructor(private fb: FormBuilder, private userBalanceService: UserBalanceService) {}
+
     fundBidValidator: ValidatorFn = (control: AbstractControl): ValidationErrors | null => {
         const group = control as FormGroup;
         const bid = group.get('bidAmount')?.value;
@@ -54,6 +58,15 @@ export class AddEditCampaignComponent {
         return bid && fund && fund < bid ? { fundLessThanBid: true } : null;
     };
 
+    fundNotExceedBalanceValidator: ValidatorFn = (control: AbstractControl): ValidationErrors | null => {
+        const group = control as FormGroup;
+        this.userBalanceService.currentBalance.subscribe(balance => {
+            this.currentBalance = balance;
+        });
+        const fund = group.get('fund')?.value;
+        return  fund && fund >= this.currentBalance ? { fundExceedsBalance: true } : null;
+    };
+    
     campaignForm = this.fb.group({
         id: [''],
         name: ['', [Validators.required]],
@@ -63,11 +76,9 @@ export class AddEditCampaignComponent {
         status: ['on', [Validators.required]],
         town: ['', [Validators.required]],
         radius: [0, [Validators.required, Validators.min(0), Validators.max(100)]]
-    }, { validators: this.fundBidValidator })
+    }, { validators: [this.fundBidValidator] })
 
-    constructor(private fb: FormBuilder) {}
-
-    ngOnChanges() {
+    ngOnChanges(changes: SimpleChanges) {
         this.campaignForm.patchValue({
             id: this.campaign.id,
             name: this.campaign.name,
@@ -78,6 +89,13 @@ export class AddEditCampaignComponent {
             town: this.campaign.town,
             radius: this.campaign.radius
         });
+        
+        if (this.header === 'Edit Campaign') {
+            this.campaignForm.get('fund')?.disable();
+        } else {
+            this.campaignForm.get('fund')?.enable();
+            this.campaignForm.addValidators(this.fundNotExceedBalanceValidator)
+        }
     }
 
     onConfirm() {
