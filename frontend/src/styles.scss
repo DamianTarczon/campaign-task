@@ -58,3 +58,20 @@ input.ng-invalid.ng-touched {
     @apply border-red-500;
 }
 
+p-multiselect.ng-invalid.ng-touched {
+    .input-text {
+        @apply border-red-500;
+    }
+}
+
+p-dropdown.ng-invalid.ng-touched {
+    .p-inputwrapper {
+        @apply border-red-500;
+    }
+}
+
+p-inputnumber.ng-invalid.ng-touched {
+    input {
+        @apply border-red-500;
+    }
+}

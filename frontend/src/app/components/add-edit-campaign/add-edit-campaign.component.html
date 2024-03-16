@@ -16,7 +16,7 @@
                 type="text"
             />
             <div 
-                *ngIf="name!.touched && name!.errors?.['required']"
+                *ngIf="campaignForm.get('name')!.touched && campaignForm.get('name')!.errors?.['required']"
                 class="text-sm text-red-500"
             >
                 Name is required
@@ -31,6 +31,12 @@
                 [options]="keywords"
                 placeholder="Select keywords"
             ></p-multiSelect>
+            <div 
+                *ngIf="campaignForm.get('keywords')!.touched && campaignForm.get('keywords')!.errors?.['required']"
+                class="text-sm text-red-500"
+            >
+                At least one keyword is required
+            </div>
         </label>
 
         <label class="flex flex-col">
@@ -43,6 +49,12 @@
                 [filter]="true" 
                 filterBy="name"
             ></p-dropdown>
+            <div 
+                *ngIf="campaignForm.get('town')!.touched && campaignForm.get('town')!.errors?.['required']"
+                class="text-sm text-red-500"
+            >
+                Town is required
+            </div>
         </label>
 
         <label class="flex flex-col">
@@ -54,10 +66,16 @@
                 [showClear]="true" 
                 placeholder="Select status"
             ></p-dropdown>
+            <div 
+                *ngIf="campaignForm.get('status')!.touched && campaignForm.get('status')!.errors?.['required']"
+                class="text-sm text-red-500"
+            >
+                Status is required
+            </div>
         </label>
 
         <label class="flex flex-col">
-            <span>Bid Amount</span>
+            <span>Bid amount</span>
             <p-inputNumber 
                 formControlName="bidAmount"
                 styleClass="w-full"
@@ -67,6 +85,18 @@
                 currency="PLN"
                 locale="pl-PL"
             ></p-inputNumber>
+            <div 
+                *ngIf="campaignForm.get('bidAmount')!.touched && campaignForm.get('bidAmount')!.errors?.['required']"
+                class="text-sm text-red-500"
+            >
+                Bid amount is required
+            </div>
+            <div 
+                *ngIf="campaignForm.get('bidAmount')!.touched && campaignForm.get('bidAmount')!.errors?.['min']"
+                class="text-sm text-red-500"
+            >
+                Minimum fund amount is 0,5 zł
+            </div>
         </label>
 
         <label class="flex flex-col">
@@ -76,10 +106,28 @@
                 styleClass="w-full"
                 inputId="minmaxfraction" 
                 mode="currency" 
-                inputStyleClass="input-text w-full"
+                [inputStyleClass]="campaignForm.errors?.['fundLessThanBid']? 'border-red-500 input-text w-full' : 'input-text w-full'"
                 currency="PLN"
                 locale="pl-PL"
             ></p-inputNumber>
+            <div 
+                *ngIf="campaignForm.get('fund')!.touched && campaignForm.get('fund')!.errors?.['required']"
+                class="text-sm text-red-500"
+            >
+                Fund is required
+            </div>
+            <div 
+                *ngIf="campaignForm.get('fund')!.touched && campaignForm.get('fund')!.errors?.['min']"
+                class="text-sm text-red-500"
+            >
+                Minimum fund amount is 100 zł
+            </div>
+            <div 
+                *ngIf="campaignForm.errors?.['fundLessThanBid']" 
+                class="text-sm text-red-500"
+            >
+                Fund amount cannot be less than the bid amount.
+            </div>
         </label>
 
         <label class="flex flex-col">
@@ -94,7 +142,7 @@
     </form>
     <p-footer class="flex gap-2.5 flex-wrap">
         <button
-            class="px-2 py-0.5 rounded-md bg-green-500 text-white hover:bg-green-600 animation-300"
+            class="px-2 py-0.5 rounded-md bg-green-500 text-white hover:bg-green-600 animation-300 disabled:opacity-40 disabled:hover:bg-green-500"
             type="button"
             (click)="onConfirm()"
             [disabled]="!campaignForm.valid"

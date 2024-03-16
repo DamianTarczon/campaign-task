@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { DialogModule } from 'primeng/dialog';
 import Campaign from '../../models/campaign.model';
-import { FormArray, FormBuilder, FormControl, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputNumberModule } from 'primeng/inputnumber';
@@ -47,16 +47,23 @@ export class AddEditCampaignComponent {
         radius: 0,
     };
 
+    fundBidValidator: ValidatorFn = (control: AbstractControl): ValidationErrors | null => {
+        const group = control as FormGroup;
+        const bid = group.get('bidAmount')?.value;
+        const fund = group.get('fund')?.value;
+        return bid && fund && fund < bid ? { fundLessThanBid: true } : null;
+    };
+
     campaignForm = this.fb.group({
         id: [''],
         name: ['', [Validators.required]],
         keywords: new FormControl([], [Validators.required]),
-        bidAmount: [0, [Validators.required, Validators.min(0)]],
-        fund: [0, [Validators.required, Validators.min(0)]],
+        bidAmount: [0, [Validators.required, Validators.min(0.5)]], //minimum 0.5 zł per click on campaign
+        fund: [0, [Validators.required, Validators.min(100)]], //average costs with 0.5 zł per click for a day is 100 zł (it's made up)
         status: ['on', [Validators.required]],
         town: ['', [Validators.required]],
-        radius: [0, [Validators.required, Validators.min(0)]]
-    })
+        radius: [0, [Validators.required, Validators.min(0), Validators.max(100)]]
+    }, { validators: this.fundBidValidator })
 
     constructor(private fb: FormBuilder) {}
 
@@ -83,8 +90,4 @@ export class AddEditCampaignComponent {
         this.display = false;
         this.cancel.emit();
     }
-
-    get name() {
-        return this.campaignForm.get('name');
-      }
 }
