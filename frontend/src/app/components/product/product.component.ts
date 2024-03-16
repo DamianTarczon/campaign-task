@@ -11,9 +11,9 @@ import { OverlayPanelModule } from 'primeng/overlaypanel';
 import { OverlayPanel } from 'primeng/overlaypanel';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ConfirmationService } from 'primeng/api';
-import { CampaignService } from '../../services/campaign/campaign.service';
 import { AddEditCampaignComponent } from '../add-edit-campaign/add-edit-campaign.component';
 import Campaign from '../../models/campaign.model';
+import { TooltipModule } from 'primeng/tooltip';
 
 @Component({
     selector: 'app-product',
@@ -23,6 +23,7 @@ import Campaign from '../../models/campaign.model';
         OverlayPanelModule,
         ConfirmDialogModule,
         AddEditCampaignComponent,
+        TooltipModule
     ],
     providers: [ConfirmationService],
     templateUrl: './product.component.html',

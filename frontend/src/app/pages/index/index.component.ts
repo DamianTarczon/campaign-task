@@ -6,14 +6,16 @@ import { CommonModule } from '@angular/common';
 import { ProductComponent } from '../../components/product/product.component';
 import Campaign from '../../models/campaign.model';
 import { CampaignService } from '../../services/campaign/campaign.service';
-import { ReactiveFormsModule } from '@angular/forms';
 import { UserBalanceService } from '../../services/user-balance/user-balance.service';
 import { take } from 'rxjs';
+import { ToastModule } from 'primeng/toast';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-index',
   standalone: true,
-  imports: [CommonModule, ProductComponent],
+  imports: [CommonModule, ProductComponent, ToastModule],
+  providers: [MessageService],
   templateUrl: './index.component.html',
   styleUrl: './index.component.scss'
 })
@@ -21,7 +23,12 @@ export class IndexComponent {
     private baseUrl: string = environment.apiUrl;
     products: Product[] = [];
     
-    constructor(private productsService: ProductsService, private campaignService: CampaignService, private userBalanceService: UserBalanceService) {}
+    constructor(
+        private productsService: ProductsService,
+        private campaignService: CampaignService, 
+        private userBalanceService: UserBalanceService, 
+        private messageService: MessageService
+    ) {}
 
     ngOnInit() {
         this.fetchProducts();
@@ -47,9 +54,12 @@ export class IndexComponent {
                         this.userBalanceService.updateBalance(currentBalance - fundAmount);
                     });
                     this.fetchProducts();
-
+                    this.messageService.add({severity:'success', summary:'Success', detail:'Campaign added successfully'});
                 },
-                error: (error) => console.log(error)
+                error: (error) => {
+                    this.messageService.add({severity:'error', summary:'Error', detail:'Something went wrong. Try again later.'});
+                    console.log(error)
+                }
             }
         )
     }
@@ -59,8 +69,12 @@ export class IndexComponent {
             {
                 next: () => {
                     this.fetchProducts();
+                    this.messageService.add({severity:'success', summary:'Success', detail:'Campaign edited successfully'});
                 },
-                error: (error) => console.log(error)
+                error: (error) => {
+                    this.messageService.add({severity:'error', summary:'Error', detail:'Something went wrong. Try again later.'});
+                    console.log(error)
+                }
             }
         )
     }
@@ -70,8 +84,12 @@ export class IndexComponent {
             {
                 next: () => {
                     this.fetchProducts();
+                    this.messageService.add({severity:'success', summary:'Success', detail:'Campaign deleted successfully'});
                 },
-                error: (error) => console.log(error)
+                error: (error) => {
+                    this.messageService.add({severity:'error', summary:'Error', detail:'Something went wrong. Try again later.'});
+                    console.log(error)
+                }
             }
         )
     }
