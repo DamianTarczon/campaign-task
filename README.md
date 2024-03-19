@@ -6,3 +6,8 @@ To start project:
 5. cd frontend
 6. npm i
 7. ng serve
+
+Live version you can see on: https://main--golden-custard-f1bea7.netlify.app/
+
+Important!!!
+If data is not loading wait a moment and refresh page, because backend need some time to restart after inactivity.
